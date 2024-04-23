@@ -48,6 +48,8 @@ dependencies:
   firebase_auth: ^4.12.1
   firebase_core: ^2.20.0
   firebase_storage: ^11.4.0
+
+  # Dependency Injection (DI)
   provider: ^6.0.5
 
   # cái xoay tròn tròn màu mè ở trang splash
@@ -56,6 +58,7 @@ dependencies:
   # UI/UX splash
   flutter_native_splash: ^2.3.5
 
+  # hỗ trợ API URL
   http: ^1.1.0
   flutter_dotenv: ^5.1.0
 
@@ -106,6 +109,12 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # BLoC Pattern
+  flutter_bloc: ^8.1.5
+
+  # So sánh 2 Obj sp Models
+  equatable: ^2.0.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -144,12 +153,6 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  fonts:
-    - family: VNI Times
-      fonts:
-        - asset: assets/fonts/vni-times-b.ttf
-          weight: 700
-        - asset: assets/fonts/vni-times-n.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
