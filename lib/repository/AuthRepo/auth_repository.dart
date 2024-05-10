@@ -31,7 +31,14 @@ class AuthRepository extends ApiEndpoints implements IAuthRepository {
       ).timeout(const Duration(seconds: 500));
       return processResponse(response);
     } catch (e) {
-      return ExceptionHandlers().getExceptionString(e);
+      if (e is NotFoundException) {
+        return {
+          "status": false,
+          "message": e.message.toString(),
+          "statusCode": 404
+        };
+      } else
+        return ExceptionHandlers().getExceptionString(e);
     }
   }
 
@@ -59,7 +66,7 @@ class AuthRepository extends ApiEndpoints implements IAuthRepository {
   @override
   Future<Map<String, dynamic>> register(AccountModel accountModel) async {
     try {
-      Uri uri = Uri.parse("$customerUrl/customer");
+      Uri uri = Uri.parse(accountsUrl);
       final client = http.Client();
       final response = await client
           .post(uri,
@@ -68,7 +75,7 @@ class AuthRepository extends ApiEndpoints implements IAuthRepository {
                 'Content-Type': 'application/json',
                 'Accept': '*/*',
               },
-              body: jsonEncode(accountModel))
+              body: accountModel.toJson())
           .timeout(const Duration(seconds: 500));
       return processResponse(response);
     } catch (e) {

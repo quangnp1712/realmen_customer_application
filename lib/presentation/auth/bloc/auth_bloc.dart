@@ -36,7 +36,7 @@ class AuthenticationBloc
   FutureOr<void> _authenticationShowCreateOtpEvent(
       AuthenticationShowCreateOtpEvent event,
       Emitter<AuthenticationState> emit) {
-    emit(ShowCreateOtpPageState());
+    emit(ShowCreateOtpPageState(phone: event.phone));
   }
 
   FutureOr<void> _authenticationShowLoginEvent(
@@ -55,23 +55,27 @@ class AuthenticationBloc
   FutureOr<void> _authenticationInputPhoneEvent(
       AuthenticationInputPhoneEvent event,
       Emitter<AuthenticationState> emit) async {
-    emit(AuthenticationLoadingState(isLoading: true));
-    var results = await AuthRepository().createOtp(event.phone);
-    var responseMessage = results['message'];
-    var responseStatus = results['status'];
-    var responseBody = results['body'];
-    if (responseStatus) {
-      emit(AuthenticationLoadingState(isLoading: false));
-      AuthPref.setPhone(event.phone.toString());
-      emit(ShowLoginPageState());
-    } else if (responseStatus == 404) {
-      emit(AuthenticationLoadingState(isLoading: false));
-      emit(ShowRegisterPageState(phone: event.phone.toString()));
-    } else {
-      emit(AuthenticationLoadingState(isLoading: false));
-      emit(ShowSnackBarActionState(
-          message: responseMessage, status: responseStatus));
-    }
+    // emit(AuthenticationLoadingState(isLoading: true));
+    // var results = await AuthRepository().createOtp(event.phone);
+    // var responseMessage = results['message'];
+    // var responseStatus = results['status'];
+
+    // if (responseStatus) {
+    //   emit(AuthenticationLoadingState(isLoading: false));
+    //   AuthPref.setPhone(event.phone.toString());
+    //   emit(ShowLoginPageState());
+    // } else if (!responseStatus && results['statusCode'] == 404) {
+    //   emit(AuthenticationLoadingState(isLoading: false));
+    //   emit(ShowSnackBarActionState(
+    //       message: responseMessage, status: responseStatus));
+    //   emit(ShowRegisterPageState(phone: event.phone.toString()));
+    // } else {
+    //   emit(AuthenticationLoadingState(isLoading: false));
+    //   emit(ShowSnackBarActionState(
+    //       message: responseMessage, status: responseStatus));
+    // }
+    AuthPref.setPhone(event.phone.toString());
+    emit(ShowLoginPageState());
   }
 
   //5
@@ -86,8 +90,9 @@ class AuthenticationBloc
     if (responseStatus) {
       emit(AuthenticationLoadingState(isLoading: false));
       rawToken = responseBody['value']['accessToken'];
+      // save info acc
       AuthPref.setToken(rawToken);
-      //
+
       emit(ShowSnackBarActionState(
           message: "Đăng nhập thành công", status: responseStatus));
       emit(AuthenticationSuccessState(token: rawToken));
@@ -106,7 +111,7 @@ class AuthenticationBloc
     String firstName = event.firstName;
     String lastName = event.lastName;
     String dob = event.dob;
-    String gender = event.gender;
+    String gender = event.gender == "NAM" ? "MALE" : "FEMALE";
     String thumbnail = event.thumbnail;
 
     AccountModel accountModel = AccountModel(
@@ -126,7 +131,7 @@ class AuthenticationBloc
       emit(AuthenticationLoadingState(isLoading: false));
       emit(ShowSnackBarActionState(
           message: "Đăng ký thành công", status: responseStatus));
-      emit(ShowCreateOtpPageState());
+      emit(ShowCreateOtpPageState(phone: phone));
     } else {
       emit(AuthenticationLoadingState(isLoading: false));
       emit(ShowSnackBarActionState(

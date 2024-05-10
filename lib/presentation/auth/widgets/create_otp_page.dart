@@ -8,7 +8,8 @@ import 'package:sizer/sizer.dart';
 
 class CreateOtpPage extends StatefulWidget {
   final AuthenticationBloc bloc;
-  const CreateOtpPage({super.key, required this.bloc});
+  final String? phone;
+  const CreateOtpPage({super.key, required this.bloc, this.phone});
 
   @override
   State<CreateOtpPage> createState() => _CreateOtpPageState();
@@ -23,7 +24,9 @@ class _CreateOtpPageState extends State<CreateOtpPage> {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     final FocusNode _focusNode = FocusNode();
-
+    phoneController = widget.phone != null
+        ? TextEditingController(text: widget.phone.toString())
+        : TextEditingController();
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

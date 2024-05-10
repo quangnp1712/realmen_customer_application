@@ -9,7 +9,11 @@ final class AuthenticationInitial extends AuthenticationState {}
 
 abstract class AuthenticationActionState extends AuthenticationState {}
 
-class ShowCreateOtpPageState extends AuthenticationState {}
+class ShowCreateOtpPageState extends AuthenticationState {
+  final String? phone;
+
+  ShowCreateOtpPageState({this.phone});
+}
 
 class ShowLoginPageState extends AuthenticationState {}
 

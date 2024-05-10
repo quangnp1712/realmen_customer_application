@@ -9,7 +9,11 @@ sealed class AuthenticationEvent {
 class AuthenticationInitialEvent extends AuthenticationEvent {}
 
 //2
-class AuthenticationShowCreateOtpEvent extends AuthenticationEvent {}
+class AuthenticationShowCreateOtpEvent extends AuthenticationEvent {
+  final String? phone;
+
+  AuthenticationShowCreateOtpEvent({this.phone});
+}
 
 class AuthenticationShowLoginEvent extends AuthenticationEvent {}
 

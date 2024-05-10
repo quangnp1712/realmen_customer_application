@@ -65,7 +65,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             } else if (currentState.isLoading) {
               _showDialogHandle = showLoadingDialog(context: context);
             }
-
+            break;
           case AuthenticationSuccessState:
             final successState = state as AuthenticationSuccessState;
             print("token:" + successState.token);
@@ -76,7 +76,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
       builder: (context, state) {
         switch (state.runtimeType) {
           case ShowCreateOtpPageState:
-            return CreateOtpPage(bloc: authPageBloc);
+            final currentState = state as ShowCreateOtpPageState;
+            return CreateOtpPage(bloc: authPageBloc, phone: currentState.phone);
           case ShowLoginPageState:
             return LoginPage(bloc: authPageBloc);
           case ShowRegisterPageState:

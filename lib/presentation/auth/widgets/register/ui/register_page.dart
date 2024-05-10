@@ -48,6 +48,9 @@ class _RegisterPageState extends State<RegisterPage> {
       bloc: registerBloc,
       listener: (context, state) {},
       builder: (context, state) {
+        phoneController = widget.phone != null
+            ? TextEditingController(text: widget.phone.toString())
+            : TextEditingController();
         switch (state.runtimeType) {
           case RegisterSelectGenderState:
             final currentState = state as RegisterSelectGenderState;
@@ -75,12 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       Positioned(
                         top: 30,
-                        // bottom: 30,
+                        bottom: 30,
                         // bottom: 10.h,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
-                            width: 80.w,
+                            width: 82.w,
                             height: null,
                             // constraints:
                             //     BoxConstraints(minHeight: 75.h, maxHeight: 80.h),
@@ -471,7 +474,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                             ),
                                             child: ElevatedButton(
                                               onPressed: () {
-                                                Get.back();
+                                                widget.bloc.add(
+                                                    AuthenticationShowCreateOtpEvent());
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(
