@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:realmen_customer_application/presentation/auth/bloc/auth_bloc.dart';
 import 'package:realmen_customer_application/presentation/auth/widgets/login_page.dart';
 import 'package:realmen_customer_application/presentation/auth/widgets/register/ui/register_page.dart';
-import 'package:realmen_customer_application/presentation/pages/home.dart';
+import 'package:realmen_customer_application/presentation/pages/landing_page/landing_page.dart';
 import 'package:realmen_customer_application/utils/dialog/loading_dialog.dart';
 import 'package:realmen_customer_application/utils/snackbar/snackbar.dart';
 
@@ -69,7 +69,8 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           case AuthenticationSuccessState:
             final successState = state as AuthenticationSuccessState;
             print("token:" + successState.token);
-            Get.offAllNamed(HomePage.HomePageRouter);
+            Get.offAllNamed(LandingPage.LandingPageRouter,
+                arguments: {'token': successState.token});
             break;
         }
       },
